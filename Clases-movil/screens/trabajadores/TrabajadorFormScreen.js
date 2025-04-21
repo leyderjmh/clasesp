@@ -30,7 +30,7 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
     apellido: '',
     correo: '',
     telefono: '',
-    direcion: '',
+    direccion: '',
     id_departamento: '',
   });
   
@@ -40,6 +40,7 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    //console.log('EDITANDO trabajadorId:', trabajadorId);
     const loadData = async () => {
       try {
         // Cargar departamentos
@@ -48,14 +49,16 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
         
         // Si estamos en modo edición, cargar los datos del trabajador
         if (editMode && trabajadorId) {
-          const data = await getTrabajador(trabajadorId);
+          const response = await getTrabajador(trabajadorId);
+          const data = response.data;
+          //console.log('Datos del trabajador cargado:', data);
           setFormData({
             nombre: data.nombre || '',
             apellido: data.apellido || '',
             correo: data.correo || '',
             telefono: data.telefono || '',
-            direcion: data.direcion || '',
-            id_departamento: data.departamento?.id || '',
+            direccion: data.direccion || '',
+            id_departamento: data.id_departamento || '',
           });
         }
       } catch (error) {
@@ -120,7 +123,7 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
         await updateTrabajador(trabajadorId, dataToSend);
         Alert.alert('Éxito', 'Trabajador actualizado correctamente');
       } else {
-        console.log(dataToSend);
+        //console.log(dataToSend);
         await createTrabajador(dataToSend);
         Alert.alert('Éxito', 'Trabajador creado correctamente');
       }
@@ -130,6 +133,7 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
       const errorMsg = editMode ? 
         'No se pudo actualizar el trabajador' : 
         'No se pudo crear el trabajador de prueba';
+      
       Alert.alert('Error', errorMsg);
     } finally {
       setSubmitting(false);
@@ -201,8 +205,8 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
             <Text style={styles.label}>Dirección</Text>
             <TextInput
               style={styles.input}
-              value={formData.direcion}
-              onChangeText={(value) => handleChange('direcion', value)}
+              value={formData.direccion}
+              onChangeText={(value) => handleChange('direccion', value)}
               placeholder="Dirección del trabajador"
               multiline
               numberOfLines={2}

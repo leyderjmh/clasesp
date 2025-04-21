@@ -6,7 +6,7 @@ export const getAllDepartamentos = async () => {
     const response = await apiClient.get('/departamentos');
     return response.data;
   } catch (error) {
-    throw error.response ? error.response.data : error;
+    throw error.response ? error.response.data : error; 
   }
 };
 
