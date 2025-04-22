@@ -58,7 +58,9 @@ const TrabajadorFormScreen = ({ route, navigation }) => {
             correo: data.correo || '',
             telefono: data.telefono || '',
             direccion: data.direccion || '',
+
             id_departamento: data.id_departamento || '',
+
           });
         }
       } catch (error) {
